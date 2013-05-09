@@ -1,4 +1,8 @@
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 alias ezc='vim ~/.oh-my-zsh/custom/config.zsh'
+alias v='view'
 alias c='clear'
 alias rsrc='exec $SHELL'
 alias gs='git status'
@@ -19,19 +23,16 @@ alias start-mongodb='mongod run --config /usr/local/etc/mongod.conf'
 alias start-redis='redis-server /usr/local/etc/redis.conf'
 
 export EDITOR="vim"
-export PAGER="view"
+export PAGER="less"
 export NVM_HOME="$HOME/.nvm"
+eval "$(rbenv init - --no-rehash)"
+export PATH=$PATH:/usr/local/share/npm/bin
+export PATH=/usr/local/heroku/bin:$PATH
+export GOPATH=$HOME/Source/go
+export PATH=./bin:$PATH # put binstubs in path
 if [[ -f "$NVM_HOME/nvm.sh" ]]; then
   source "$NVM_HOME/nvm.sh"
 fi
-# don't init rbenv in a dumb terminal (ie dterm)
-if [[ "$TERM" != "dumb" ]]; then
-  eval "$(rbenv init - --no-rehash)"
-fi
-export PATH=$PATH:/usr/local/share/npm/bin
-export PATH="/usr/local/heroku/bin:$PATH"
-export GOPATH=$HOME/Source/go
-export PATH=./bin:$PATH # put binstubs in path
 
 # make shell behave like vim
 bindkey -v
@@ -42,21 +43,23 @@ bindkey -a u undo
 bindkey -a '^R' redo
 bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
-# show the current mode in the prompt
-precmd() {
-  RPROMPT=""
-}
-zle-keymap-select() {
-  RPROMPT=""
-  [[ $KEYMAP = vicmd ]] && RPROMPT="(CMD)"
-  () { return $__prompt_status }
+
+vim_ins_mode="%{$fg[cyan]%}[INS]%{$reset_color%}"
+vim_cmd_mode="%{$fg[green]%}[CMD]%{$reset_color%}"
+vim_mode=$vim_ins_mode
+
+function zle-keymap-select {
+vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
   zle reset-prompt
 }
-zle-line-init() {
-  typeset -g __prompt_status="$?"
-}
 zle -N zle-keymap-select
-zle -N zle-line-inii
 
-ZSH_THEME='blinks'
-plugins=(rbenv)
+function zle-line-finish {
+  vim_mode=$vim_ins_mode
+}
+zle -N zle-line-finish
+
+RPROMPT='${vim_mode}'
+
+ZSH_THEME='sammy'
+plugins=(rbenv vi-mode)
