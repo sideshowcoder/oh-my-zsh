@@ -21,6 +21,7 @@ alias start-pg='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/ser
 alias stop-pg='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias start-mongodb='mongod run --config /usr/local/etc/mongod.conf'
 alias start-redis='redis-server /usr/local/etc/redis.conf'
+alias git='hub'
 
 export EDITOR="vim"
 export PAGER="less"
@@ -30,6 +31,7 @@ export PATH=$PATH:/usr/local/share/npm/bin
 export PATH=/usr/local/heroku/bin:$PATH
 export GOPATH=$HOME/Source/go
 export PATH=./bin:$PATH # put binstubs in path
+export PATH=./node_modules/.bin:$PATH # put npm local bins in path
 if [[ -f "$NVM_HOME/nvm.sh" ]]; then
   source "$NVM_HOME/nvm.sh"
 fi
@@ -43,6 +45,8 @@ bindkey -a u undo
 bindkey -a '^R' redo
 bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
+bindkey '\e[3~' delete-char
+bindkey '^R' history-incremental-search-backward
 
 vim_ins_mode="%{$fg[cyan]%}[INS]%{$reset_color%}"
 vim_cmd_mode="%{$fg[green]%}[CMD]%{$reset_color%}"
