@@ -7,7 +7,9 @@ alias c='clear'
 alias rsrc='exec $SHELL'
 alias gs='git status'
 alias gl='git log --oneline'
+alias glg='git lg'
 alias gc='git commit'
+alias gco='git co'
 alias gac='git add -p'
 alias ga='git add'
 alias l='ls'
@@ -21,7 +23,15 @@ alias start-pg='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/ser
 alias stop-pg='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias start-mongodb='mongod run --config /usr/local/etc/mongod.conf'
 alias start-redis='redis-server /usr/local/etc/redis.conf'
-alias git='hub'
+
+# coder specific shortcuts ;)
+alias r='rails'
+
+# don't correct me
+alias nf='nocorrect nf'
+
+export TODOTXT_DEFAULT_ACTION=ls
+alias t="todo.sh -a -d $HOME/.todo/config"
 
 export EDITOR="vim"
 export PAGER="less"
@@ -29,7 +39,9 @@ export NVM_HOME="$HOME/.nvm"
 eval "$(rbenv init - --no-rehash)"
 export PATH=$PATH:/usr/local/share/npm/bin
 export PATH=/usr/local/heroku/bin:$PATH
+export PATH="$PATH:$HOME/Library/Python/2.7/bin"
 export GOPATH=$HOME/Source/go
+export PYTHONPATH=$HOME/lib/python2.7/site-packages
 export PATH=./bin:$PATH # put binstubs in path
 export PATH=./node_modules/.bin:$PATH # put npm local bins in path
 if [[ -f "$NVM_HOME/nvm.sh" ]]; then
@@ -48,8 +60,8 @@ bindkey '^H' backward-delete-char
 bindkey '\e[3~' delete-char
 bindkey '^R' history-incremental-search-backward
 
-vim_ins_mode="%{$fg[cyan]%}[INS]%{$reset_color%}"
-vim_cmd_mode="%{$fg[green]%}[CMD]%{$reset_color%}"
+vim_ins_mode="%{$fg[white]%}[INS]%{$reset_color%}"
+vim_cmd_mode="%{$fg[white]%}[CMD]%{$reset_color%}"
 vim_mode=$vim_ins_mode
 
 function zle-keymap-select {
@@ -62,8 +74,10 @@ function zle-line-finish {
   vim_mode=$vim_ins_mode
 }
 zle -N zle-line-finish
+unsetopt correct
+unsetopt correct_all
+ZSH_THEME="sammy"
 
 RPROMPT='${vim_mode}'
 
-ZSH_THEME='sammy'
 plugins=(rbenv vi-mode)
