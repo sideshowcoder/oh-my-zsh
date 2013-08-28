@@ -47,6 +47,8 @@ export PATH=./node_modules/.bin:$PATH # put npm local bins in path
 if [[ -f "$NVM_HOME/nvm.sh" ]]; then
   source "$NVM_HOME/nvm.sh"
 fi
+# add riak source install
+export PATH=$PATH:$HOME/Source/riak/rel/riak/bin
 
 # make shell behave like vim
 bindkey -v
@@ -76,8 +78,12 @@ function zle-line-finish {
 zle -N zle-line-finish
 unsetopt correct
 unsetopt correct_all
-ZSH_THEME="sammy"
+
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
 
 RPROMPT='${vim_mode}'
+ZSH_THEME="sammy"
 
 plugins=(rbenv vi-mode)
