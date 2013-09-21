@@ -47,6 +47,12 @@ export PATH=./node_modules/.bin:$PATH # put npm local bins in path
 if [[ -f "$NVM_HOME/nvm.sh" ]]; then
   source "$NVM_HOME/nvm.sh"
 fi
+
+# load r15b01 erlang by default if available
+if [[ -f "$HOME/erlang/r15b01/activate" ]]; then
+  source "$HOME/erlang/r15b01/activate"
+fi
+
 # add riak source install
 export PATH=$PATH:$HOME/Source/riak/rel/riak/bin
 
