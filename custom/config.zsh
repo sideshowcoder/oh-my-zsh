@@ -24,8 +24,15 @@ alias stop-pg='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias start-mongodb='mongod run --config /usr/local/etc/mongod.conf'
 alias start-redis='redis-server /usr/local/etc/redis.conf'
 
+# ssh boxes
+#
+# Nitrous.io
+alias ruby-dev-box='ssh -l action euw1.actionbox.io -p 15847'
+
+#
 # coder specific shortcuts ;)
 alias r='rails'
+alias j='jasmine-node'
 
 # don't correct me
 alias nf='nocorrect nf'
