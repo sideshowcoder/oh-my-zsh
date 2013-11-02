@@ -24,6 +24,12 @@ alias stop-pg='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias start-mongodb='mongod run --config /usr/local/etc/mongod.conf'
 alias start-redis='redis-server /usr/local/etc/redis.conf'
 
+# Highligth code!
+syntax-copy() {
+  highlight -O rtf $* | pbcopy
+}
+alias sc='syntax-copy'
+
 # ssh boxes
 #
 # Nitrous.io
@@ -36,9 +42,6 @@ alias j='jasmine-node'
 
 # don't correct me
 alias nf='nocorrect nf'
-
-export TODOTXT_DEFAULT_ACTION=ls
-alias t="todo.sh -a -d $HOME/.todo/config"
 
 export EDITOR="vim"
 export PAGER="less"
@@ -53,15 +56,14 @@ export PATH=./bin:$PATH # put binstubs in path
 export PATH=./node_modules/.bin:$PATH # put npm local bins in path
 if [[ -f "$NVM_HOME/nvm.sh" ]]; then
   source "$NVM_HOME/nvm.sh"
+  # load the newest node version
+  nvm use v0.10.21 
 fi
 
-# load r15b01 erlang by default if available
+# load r16b01 erlang by default if available
 if [[ -f "$HOME/erlang/r15b01/activate" ]]; then
   source "$HOME/erlang/r15b01/activate"
 fi
-
-# add riak source install
-export PATH=$PATH:$HOME/Source/riak/rel/riak/bin
 
 # make shell behave like vim
 bindkey -v
@@ -97,6 +99,6 @@ zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
 RPROMPT='${vim_mode}'
-ZSH_THEME="sammy"
+ZSH_THEME="sammyblack"
 
 plugins=(rbenv vi-mode)
